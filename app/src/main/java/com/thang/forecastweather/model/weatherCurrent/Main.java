@@ -7,7 +7,7 @@ public class Main {
 
     private float temp;
 
-    private float feelsLike;
+    private float feels_like;
 
     private float humidity;
 }

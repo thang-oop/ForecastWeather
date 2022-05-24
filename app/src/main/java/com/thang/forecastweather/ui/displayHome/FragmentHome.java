@@ -30,7 +30,6 @@ public class FragmentHome extends Fragment implements HomeInterface {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         homePresenter = new HomePresenter(this);
-
     }
 
     @Override
@@ -99,10 +98,10 @@ public class FragmentHome extends Fragment implements HomeInterface {
             SimpleDateFormat sp = new SimpleDateFormat("EE yyyy-MM-dd HH-mm-ss");
             binding.textviewCurrentTime.setText(sp.format(date));
             binding.textviewTemperature.setText(String.valueOf(df.format((data.getMain().getTemp()) - KeyTemF.TEMF)));
-            binding.textviewTempFeels.setText(String.valueOf(df.format((data.getMain().getFeelsLike()) - KeyTemF.TEMF)));
+            binding.textviewTempFeels.setText(String.valueOf(df.format((data.getMain().getFeels_like()) - KeyTemF.TEMF)));
             binding.textviewDetailHumidity.setText(df.format(data.getMain().getHumidity()));
             binding.textviewDetailWindspeed.setText(String.valueOf(data.getWind().getSpeed()));
-            binding.textviewDescription.setText(data.getWeather().get(0).getDescription().toString());
+            binding.textviewDescription.setText(data.getWeather().get(0).getDescription());
             String icon = data.getWeather().get(0).getIcon();
             Glide.with(getContext()).load("http://openweathermap.org/img/wn/" + icon + ".png").into(binding.imageviewIconWeather);
         } else return;
@@ -114,5 +113,4 @@ public class FragmentHome extends Fragment implements HomeInterface {
             Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
         } else return;
     }
-
 }

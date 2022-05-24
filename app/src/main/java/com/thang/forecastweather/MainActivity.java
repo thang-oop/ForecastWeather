@@ -7,14 +7,18 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
+import com.thang.forecastweather.adapter.RecycleViewWeather7DayAdapter;
 import com.thang.forecastweather.adapter.ViewPagerAdapter;
 import com.thang.forecastweather.databinding.ActivityMainBinding;
+import com.thang.forecastweather.model.weather7Days.ListForecast;
 import com.thang.forecastweather.ui.displayHome.FragmentHome;
+import com.thang.forecastweather.ui.displayWeather7Day.FragmentWeather7Day;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecycleViewWeather7DayAdapter.senDataToActiviTy {
 
     private ViewPagerAdapter adapter;
     private ActivityMainBinding binding;
+    private RecycleViewWeather7DayAdapter recycleViewWeather7DayAdapter;
 
 
     @Override
@@ -23,9 +27,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
+        recycleViewWeather7DayAdapter = new RecycleViewWeather7DayAdapter(this);
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new FragmentHome(), "HOME");
-        adapter.addFragment(new FragmentHome(), "7DAY");
+        adapter.addFragment(new FragmentWeather7Day(), "7DAY");
         adapter.addFragment(new FragmentHome(), "NOTE");
         binding.viewPager.setAdapter(adapter);
         binding.viewPager.setOffscreenPageLimit(0); //load du lieu cho 0 tap tiep thep
@@ -43,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
                     if (fragment_home instanceof FragmentHome) {
                         FragmentHome homeFragment = (FragmentHome) fragment_home;
                         String cityName = homeFragment.getCityName();
-//                        if (fragment_weather7day instanceof Weather7DayFragment){
-//                            Weather7DayFragment weather_7dayFragment = (Weather7DayFragment) fragment_weather7day;
-//                            weather_7dayFragment.setCityName(cityName);
-//                        }
+                        if (fragment_weather7day instanceof FragmentWeather7Day){
+                            FragmentWeather7Day weather_7dayFragment = (FragmentWeather7Day) fragment_weather7day;
+                            weather_7dayFragment.setCityName(cityName);
+                        }
                     }
                 }
             }
@@ -60,5 +65,10 @@ public class MainActivity extends AppCompatActivity {
         binding.tapLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_home_24);
         binding.tapLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_next_week_24);
         binding.tapLayout.getTabAt(2).setIcon(R.drawable.ic_note);
+    }
+
+    @Override
+    public void senData(ListForecast lists) {
+
     }
 }
