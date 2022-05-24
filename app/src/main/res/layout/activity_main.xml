@@ -4,15 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.92"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tapLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:tabTextColor="#A8A2A2"
+        app:tabSelectedTextColor="#FFFFFF"
+        app:tabIconTint="#FFFFFF"
+        app:tabMode="fixed"
+        android:background="#00ECE382"
+        app:layout_constraintTop_toBottomOf="@id/viewPager"
+        app:layout_constraintHeight_percent="0.08"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
