@@ -95,7 +95,7 @@ public class FragmentHome extends Fragment implements HomeInterface {
         if (data.getName() != null && binding != null){
             binding.textviewCity.setText(data.getName());
             Date date = new Date(Long.valueOf(data.getDt()) * 1000L);
-            SimpleDateFormat sp = new SimpleDateFormat("EE yyyy-MM-dd HH-mm-ss");
+            SimpleDateFormat sp = new SimpleDateFormat("EE yyyy/MM/dd HH:mm:ss");
             binding.textviewCurrentTime.setText(sp.format(date));
             binding.textviewTemperature.setText(String.valueOf(df.format((data.getMain().getTemp()) - KeyTemF.TEMF)));
             binding.textviewTempFeels.setText(String.valueOf(df.format((data.getMain().getFeels_like()) - KeyTemF.TEMF)));

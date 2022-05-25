@@ -12,6 +12,7 @@ import com.thang.forecastweather.adapter.ViewPagerAdapter;
 import com.thang.forecastweather.databinding.ActivityMainBinding;
 import com.thang.forecastweather.model.weather7Days.ListForecast;
 import com.thang.forecastweather.ui.displayHome.FragmentHome;
+import com.thang.forecastweather.ui.displayNote.FragmentNote;
 import com.thang.forecastweather.ui.displayWeather7Day.FragmentWeather7Day;
 
 public class MainActivity extends AppCompatActivity implements RecycleViewWeather7DayAdapter.senDataToActiviTy {
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements RecycleViewWeathe
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new FragmentHome(), "HOME");
         adapter.addFragment(new FragmentWeather7Day(), "7DAY");
-        adapter.addFragment(new FragmentHome(), "NOTE");
+        adapter.addFragment(new FragmentNote(), "NOTE");
         binding.viewPager.setAdapter(adapter);
         binding.viewPager.setOffscreenPageLimit(0); //load du lieu cho 0 tap tiep thep
         binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements RecycleViewWeathe
 
     @Override
     public void senData(ListForecast lists) {
-
+        FragmentNote noteFragment = (FragmentNote) adapter.getFragmentByPosition(2);
+        noteFragment.receiveDataFromFragment7Day(lists);
     }
 }
