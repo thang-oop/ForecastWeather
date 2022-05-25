@@ -16,5 +16,7 @@ public class ListForecast implements Serializable {
 
     private String dt_txt;
 
+    private boolean isNote;
+
 }
 

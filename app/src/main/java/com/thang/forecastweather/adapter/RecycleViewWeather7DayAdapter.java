@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.thang.forecastweather.R;
 import com.thang.forecastweather.databinding.ItemWeather7dayBinding;
+import com.thang.forecastweather.db.SQLiteNoteOpenHelper;
 import com.thang.forecastweather.model.weather7Days.ListForecast;
+import com.thang.forecastweather.model.weatherNote.Note;
 import com.thang.forecastweather.utils.KeyTemF;
 
 import java.text.DecimalFormat;
@@ -30,6 +33,7 @@ public class RecycleViewWeather7DayAdapter extends RecyclerView.Adapter<RecycleV
     private List<ListForecast> list_Lists ;
     private senDataToActiviTy senDataToActiviTy;
     private DecimalFormat df = new DecimalFormat("#");
+    private SQLiteNoteOpenHelper db;
 
     public RecycleViewWeather7DayAdapter(List<ListForecast> list, Context context){
         this.list_Lists = list;
@@ -49,6 +53,7 @@ public class RecycleViewWeather7DayAdapter extends RecyclerView.Adapter<RecycleV
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weather_7day,parent,false);
         senDataToActiviTy = (senDataToActiviTy) context;
+        db = new SQLiteNoteOpenHelper(context);
         return new MyViewHolder(view);
     }
 
@@ -61,8 +66,13 @@ public class RecycleViewWeather7DayAdapter extends RecyclerView.Adapter<RecycleV
         holder.binding.imageNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if ((Integer)holder.binding.imageNote.getTag() == R.drawable.ic_note_change) {
+                    Toast.makeText(context, "Duplicate", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Alert Delete");
+                builder.setTitle("Alert Add");
                 builder.setMessage("Are you sure add forecast weather ");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -110,10 +120,21 @@ public class RecycleViewWeather7DayAdapter extends RecyclerView.Adapter<RecycleV
             binding.textviewTempmax16day.setText(String.valueOf(df.format(lists.getMain().getTemp_max()- KeyTemF.TEMF)));
             binding.textviewDate16day.setText(sp.format(date));
             binding.textviewHour.setText(spTime.format(date));
+            binding.imageNote.setImageResource(checkIcon(lists.getDt()) ? R.drawable.ic_note_change : R.drawable.ic_note);
             String icon = "";
             if (lists.getWeather() != null) icon = lists.getWeather().get(0).getIcon();
 
             Glide.with(context).load("http://openweathermap.org/img/wn/" + icon + ".png").into(binding.imagewviewIcon16day);
+        }
+
+        public boolean checkIcon(long date) {
+            List<Note> list = db.getAllNote();
+
+            for (Note note : list) {
+                if (note.getDate() == date) return true;
+            }
+
+            return false;
         }
     }
 

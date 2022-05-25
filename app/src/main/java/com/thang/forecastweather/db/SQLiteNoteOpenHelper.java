@@ -66,7 +66,7 @@ public class SQLiteNoteOpenHelper extends SQLiteOpenHelper {
             float tmin = cursor.getFloat(3);
             float tmax = cursor.getFloat(4);
             int humidity = cursor.getInt(5);
-            Note note = new Note(id,date,icon,tmin,tmax,humidity);
+            Note note = new Note(id,date,icon,tmin,tmax,humidity, true);
             notes.add(note);
         }
         return notes;
