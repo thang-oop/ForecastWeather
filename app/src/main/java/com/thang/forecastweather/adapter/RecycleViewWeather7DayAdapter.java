@@ -66,7 +66,7 @@ public class RecycleViewWeather7DayAdapter extends RecyclerView.Adapter<RecycleV
         holder.binding.imageNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((Integer)holder.binding.imageNote.getTag() == R.drawable.ic_note_change) {
+                if (holder.binding.imageNote.getTag() != null && Integer.parseInt(holder.binding.imageNote.getTag().toString()) == R.drawable.ic_note_change) {
                     Toast.makeText(context, "Duplicate", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -79,6 +79,7 @@ public class RecycleViewWeather7DayAdapter extends RecyclerView.Adapter<RecycleV
                     public void onClick(DialogInterface dialogInterface, int i) {
                         senDataToActiviTy.senData(list_Lists.get(position));
                         holder.binding.imageNote.setImageResource(R.drawable.ic_note_change);
+                        holder.binding.imageNote.setTag(R.drawable.ic_note_change);
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
